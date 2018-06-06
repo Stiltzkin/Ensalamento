@@ -1,8 +1,13 @@
 package br.edu.uniopet.webservice.model.dao;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
+
+import org.json.JSONException;
+
+import com.google.gson.Gson;
 
 import br.edu.uniopet.webservice.exceptions.DAOException;
 import br.edu.uniopet.webservice.exceptions.ErrorCode;
@@ -77,9 +82,11 @@ public class CursoDAO {
 	public Curso save(Curso curso) {
 		EntityManager em = JPAUtil.getEntityManager();
 
-		if (!cursoIsValid(curso)) {
-			throw new DAOException("Curso com dados incompletos.", ErrorCode.BAD_REQUEST.getCode());
-		}
+		///TODO:: mandar json pro front
+//		if (cursoIsValid(curso) != null) {
+//			String jsonError = new Gson().toJson(cursoIsValid(curso));
+//			throw jsonError;
+//		}
 
 		try {
 			em.getTransaction().begin();
@@ -101,9 +108,10 @@ public class CursoDAO {
 		if (curso.getId() <= 0) {
 			throw new DAOException("O id precisa ser maior do que 0.", ErrorCode.BAD_REQUEST.getCode());
 		}
-		if (!cursoIsValid(curso)) {
-			throw new DAOException("Curso com dados incompletos.", ErrorCode.BAD_REQUEST.getCode());
-		}
+		// if (!cursoIsValid(curso)) {
+		// throw new DAOException("Curso com dados incompletos.",
+		// ErrorCode.BAD_REQUEST.getCode());
+		// }
 
 		try {
 			em.getTransaction().begin();
@@ -150,14 +158,25 @@ public class CursoDAO {
 		return curso;
 	}
 
-	private boolean cursoIsValid(Curso curso) {
-		try {
-			if (curso.getNome_curso().isEmpty()) {
-				return false;
-			}
-		} catch (NullPointerException ex) {
-			throw new DAOException("Curso com dados incompletos.", ErrorCode.BAD_REQUEST.getCode());
+	private ArrayList<String> cursoIsValid(Curso curso) {
+		ArrayList<String> erros = new ArrayList<String>();
+
+		if (curso.getNome_curso().isEmpty()) {
+			erros.add("Insira o nome do curso.");
 		}
-		return true;
+
+		// try {
+		// if (curso.getNome_curso().isEmpty()) {
+		// return false;
+		// }
+		// } catch (NullPointerException ex) {
+		// throw new DAOException("Curso com dados incompletos.",
+		// ErrorCode.BAD_REQUEST.getCode());
+		// }
+		return erros;
+	}
+	
+	private String jsonString(String jsonError) throws JSONException{
+		return jsonError;
 	}
 }

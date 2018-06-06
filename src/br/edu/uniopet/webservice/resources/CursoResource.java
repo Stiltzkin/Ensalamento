@@ -39,7 +39,7 @@ public class CursoResource {
 		if(paginateFilter.getName() != null) {
 			return service.getCursoByName(paginateFilter.getName());
 		}
-		return service.getCursos();
+		return service.getAll();
 	}
 
 	@POST

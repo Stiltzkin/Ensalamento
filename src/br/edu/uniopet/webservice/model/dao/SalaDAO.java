@@ -1,6 +1,7 @@
 package br.edu.uniopet.webservice.model.dao;
 
 import java.util.List;
+import java.util.Arrays;
 
 import javax.persistence.EntityManager;
 
@@ -72,9 +73,10 @@ public class SalaDAO {
 	public Sala save(Sala sala) {
 		EntityManager em = JPAUtil.getEntityManager();
 		
-		if(!salaIsValid(sala)) {
-			throw new DAOException("Sala com dados incompletps. ", ErrorCode.BAD_REQUEST.getCode());
-		}
+		//TODO
+//		if(salaIsValid(sala) != null) {
+//			throw new DAOException("Sala com dados incomplets. ", ErrorCode.BAD_REQUEST.getCode());
+//		}
 		
 		try {
 			em.getTransaction().begin();
@@ -132,17 +134,19 @@ public class SalaDAO {
 			em.close();
 		}
 		return sala;
-		
-		
 	}
 	
-	private boolean salaIsValid(Sala sala){
+	private List<String> salaIsValid(Sala sala){
+		String[] erro = null;
+		List<String> erros = Arrays.asList(erro);
+		
+		
 		if (sala.getNm_sala().isEmpty()) {
-			return false;
+			erros.add("Insira o nome da sala.");
 		}
-//		if(sala.getTipo_sala() == ) {
-//			return false;
-//		}
-		return true;
+		if(sala.getTipo_sala() == 0) {
+			erros.add("Selecione o tipo da sala.");
+		}
+		return erros;
 	}
 }

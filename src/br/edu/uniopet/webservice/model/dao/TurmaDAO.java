@@ -47,25 +47,24 @@ public class TurmaDAO {
 	}
 
 	public List<Turma> getByName(String name) {
-	      EntityManager em = JPAUtil.getEntityManager();
-	      List<Turma> turmas = null;
-	       
-	      try {
-	    	  turmas = em.createQuery("select p from Turma p where p.nm_turma like :name", Turma.class)
-	                           .setParameter("name", "%" + name + "%")
-	                           .getResultList();  
-	      } catch (RuntimeException ex) {
-	             throw new DAOException("Erro ao buscar turmas por nome no banco de dados: " + ex.getMessage(), ErrorCode.SERVER_ERROR.getCode());
-	      } finally {
-	             em.close();
-	      }
-	       
-	      if (turmas.isEmpty()) {
-	             throw new DAOException("A consulta não retornou elementos.", 
-	              ErrorCode.NOT_FOUND.getCode());
-	      }
-	       
-	      return turmas;
+		EntityManager em = JPAUtil.getEntityManager();
+		List<Turma> turmas = null;
+
+		try {
+			turmas = em.createQuery("select p from Turma p where p.nm_turma like :name", Turma.class)
+					.setParameter("name", "%" + name + "%").getResultList();
+		} catch (RuntimeException ex) {
+			throw new DAOException("Erro ao buscar turmas por nome no banco de dados: " + ex.getMessage(),
+					ErrorCode.SERVER_ERROR.getCode());
+		} finally {
+			em.close();
+		}
+
+		if (turmas.isEmpty()) {
+			throw new DAOException("A consulta não retornou elementos.", ErrorCode.NOT_FOUND.getCode());
+		}
+
+		return turmas;
 	}
 
 	public Turma getById(Long idTurma) {
@@ -104,7 +103,8 @@ public class TurmaDAO {
 			em.getTransaction().commit();
 		} catch (RuntimeException ex) {
 			em.getTransaction().rollback();
-			throw new DAOException("Erro ao salvar turma no banco de dados: " + ex.getMessage(),ErrorCode.SERVER_ERROR.getCode());
+			throw new DAOException("Erro ao salvar turma no banco de dados: " + ex.getMessage(),
+					ErrorCode.SERVER_ERROR.getCode());
 		} finally {
 			em.close();
 		}

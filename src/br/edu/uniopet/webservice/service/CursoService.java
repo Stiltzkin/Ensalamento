@@ -8,7 +8,7 @@ import br.edu.uniopet.webservice.model.domain.Curso;
 public class CursoService {
 	private CursoDAO dao = new CursoDAO();
 
-	public List<Curso> getCursos() {
+	public List<Curso> getAll() {
 		return dao.getAll();
 	}
 

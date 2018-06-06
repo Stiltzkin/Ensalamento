@@ -1,166 +1,200 @@
 {
-	"id": "e6708607-80d4-4300-80f1-c092d4995776",
-	"name": "java webservice",
-	"description": "",
-	"auth": null,
-	"events": null,
-	"variables": [],
-	"order": [
-		"2c662919-967e-4897-9421-f4cd22ef2ddb",
-		"aa8cb9f9-dbd0-4fa2-96f1-f150bcf22d96",
-		"a00bfd73-1ade-4ead-8458-0905015631a6",
-		"917177b5-ced1-4841-992b-f4d9fea2987f",
-		"ee792d0c-6949-4625-bc74-776bae97eab0",
-		"d85a7438-f85d-49dd-958f-f9aedcd9af08"
-	],
-	"folders_order": [],
-	"folders": [],
-	"requests": [
+	"info": {
+		"_postman_id": "e6708607-80d4-4300-80f1-c092d4995776",
+		"name": "java webservice",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
 		{
-			"id": "2c662919-967e-4897-9421-f4cd22ef2ddb",
 			"name": "Turmas POST",
-			"url": "http://localhost:9999/Ensalamento2-0.0.1-SNAPSHOT/webapi/turmas/",
-			"description": "",
-			"data": [],
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json"
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nm_turma\": \"turma do caralho\",\r\n    \"num_alunos\": 20,\r\n    \"curso\":{\"id\" : 1, \"nome_curso\": \"hah\"}\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9999/Ensalamento2-0.0.1-SNAPSHOT/webapi/turmas/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"Ensalamento2-0.0.1-SNAPSHOT",
+						"webapi",
+						"turmas",
+						""
+					]
 				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [],
-			"folder": null,
-			"rawModeData": "{\r\n    \"nm_turma\": \"turma do capeta\",\r\n    \"num_alunos\": 22,\r\n    \"curso\":{\"id\" : 1}\r\n}",
-			"headers": "Content-Type: application/json\n",
-			"pathVariables": {}
+			},
+			"response": []
 		},
 		{
-			"id": "917177b5-ced1-4841-992b-f4d9fea2987f",
-			"name": "Sala POST",
-			"url": "http://localhost:9999/Ensalamento2-0.0.1-SNAPSHOT/webapi/salas/",
-			"description": "",
-			"data": [],
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json"
-				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [],
-			"folder": null,
-			"rawModeData": "{\r\n    \"nm_sala\": \"nome da sala teste\",\r\n    \"tipo_sala\": 1,\r\n    \"num_cadeiras\": 30\r\n}",
-			"headers": "Content-Type: application/json\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "a00bfd73-1ade-4ead-8458-0905015631a6",
-			"name": "Cursos GET By NAME",
-			"url": "http://localhost:9999/Ensalamento2-0.0.1-SNAPSHOT/webapi/cursos?name=capeta",
-			"description": "",
-			"data": [],
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json"
-				}
-			],
-			"method": "GET",
-			"pathVariableData": [],
-			"queryParams": [
-				{
-					"key": "name",
-					"value": "capeta",
-					"equals": true,
-					"description": "",
-					"enabled": true
-				}
-			],
-			"auth": null,
-			"events": [],
-			"folder": null,
-			"rawModeData": "{\r\n    \"nome_curso\": \"capeta\"\r\n}",
-			"headers": "Content-Type: application/json\n",
-			"pathVariables": {}
-		},
-		{
-			"id": "aa8cb9f9-dbd0-4fa2-96f1-f150bcf22d96",
 			"name": "Cursos POST",
-			"url": "http://localhost:9999/Ensalamento2-0.0.1-SNAPSHOT/webapi/cursos/",
-			"description": "",
-			"data": [],
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json"
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome_curso\": \"teste\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9999/Ensalamento2-0.0.1-SNAPSHOT/webapi/cursos/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"Ensalamento2-0.0.1-SNAPSHOT",
+						"webapi",
+						"cursos",
+						""
+					]
 				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [],
-			"folder": null,
-			"rawModeData": "{\r\n    \"nome_curso\": \"teste\"\r\n}",
-			"headers": "Content-Type: application/json\n",
-			"pathVariables": {}
+			},
+			"response": []
 		},
 		{
-			"id": "d85a7438-f85d-49dd-958f-f9aedcd9af08",
-			"name": "Equipamentos POST",
-			"url": "http://localhost:9999/Ensalamento2-0.0.1-SNAPSHOT/webapi/equipamentos/",
-			"description": "",
-			"data": [],
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json"
+			"name": "Cursos GET By NAME",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome_curso\": \"capeta\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9999/Ensalamento2-0.0.1-SNAPSHOT/webapi/cursos?name=teste",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"Ensalamento2-0.0.1-SNAPSHOT",
+						"webapi",
+						"cursos"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "teste"
+						}
+					]
 				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [],
-			"folder": null,
-			"rawModeData": "{\r\n    \"data_inicio\": \"2018-06-01\",\r\n    \"data_fim\": \"2018-06-01\",\r\n    \"sala\": {\"idSala\": 1},\r\n    \"id_turma\": 1\r\n}",
-			"headers": "Content-Type: application/json\n",
-			"pathVariables": {}
+			},
+			"response": []
 		},
 		{
-			"id": "ee792d0c-6949-4625-bc74-776bae97eab0",
+			"name": "Sala POST",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nm_sala\": \"nome da sala teste\",\r\n    \"tipo_sala\": 1,\r\n    \"num_cadeiras\": 30\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9999/Ensalamento2-0.0.1-SNAPSHOT/webapi/salas/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"Ensalamento2-0.0.1-SNAPSHOT",
+						"webapi",
+						"salas",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Agendamento POST",
-			"url": "http://localhost:9999/Ensalamento2-0.0.1-SNAPSHOT/webapi/agendas/",
-			"description": "",
-			"data": [],
-			"dataMode": "raw",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json"
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data_inicio\": \"2018-02-09 10:22:10\",\r\n    \"data_fim\": \"2018-03-09 10:22:10\",\r\n    \"sala\": {\"idSala\": 1},\r\n    \"turma\": {\"idTurma\": 1}\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9999/Ensalamento2-0.0.1-SNAPSHOT/webapi/agendas/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"Ensalamento2-0.0.1-SNAPSHOT",
+						"webapi",
+						"agendas",
+						""
+					]
 				}
-			],
-			"method": "POST",
-			"pathVariableData": [],
-			"queryParams": [],
-			"auth": null,
-			"events": [],
-			"folder": null,
-			"rawModeData": "{\r\n    \"data_inicio\": \"2018-06-01\",\r\n    \"data_fim\": \"2018-06-01\",\r\n    \"sala\": {\"idSala\": 1},\r\n    \"id_turma\": 1\r\n}",
-			"headers": "Content-Type: application/json\n",
-			"pathVariables": {}
+			},
+			"response": []
+		},
+		{
+			"name": "Equipamentos POST",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data_inicio\": \"2018-06-01\",\r\n    \"data_fim\": \"2018-06-01\",\r\n    \"sala\": {\"idSala\": 1},\r\n    \"id_turma\": 1\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9999/Ensalamento2-0.0.1-SNAPSHOT/webapi/equipamentos/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"Ensalamento2-0.0.1-SNAPSHOT",
+						"webapi",
+						"equipamentos",
+						""
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

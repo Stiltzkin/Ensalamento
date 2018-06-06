@@ -5,7 +5,7 @@ import java.util.List;
 import br.edu.uniopet.webservice.model.dao.AgendaDAO;
 import br.edu.uniopet.webservice.model.domain.Agenda;
 
-public class AgendaService {
+public class AgendaService{
 	private AgendaDAO dao = new AgendaDAO();
 	
 	public List<Agenda> getAgendas(){

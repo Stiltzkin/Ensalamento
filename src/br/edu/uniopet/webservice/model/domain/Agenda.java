@@ -1,5 +1,6 @@
 package br.edu.uniopet.webservice.model.domain;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class Agenda {
 
@@ -19,19 +22,21 @@ public class Agenda {
 	private long idAgenda;
 
 	@Column(nullable = false)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", locale = "pt_BR")
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
 	private Date data_inicio;
 
 	@Column(nullable = false)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", locale = "pt_BR")
 	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
 	private Date data_fim;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "idTurma")
 	private Turma turma;
-	
+
 	@ManyToOne
-	@JoinColumn(name="idSala")
+	@JoinColumn(name = "idSala")
 	private Sala sala;
 
 	public long getIdAgenda() {
@@ -76,7 +81,7 @@ public class Agenda {
 
 	public Agenda() {
 	}
-	
+
 	public Agenda(long idAgenda, Date data_inicio, Date data_fim, Turma turma, Sala sala) {
 		super();
 		this.idAgenda = idAgenda;
@@ -91,9 +96,5 @@ public class Agenda {
 		return "Agenda [idAgenda=" + idAgenda + ", data_inicio=" + data_inicio + ", data_fim=" + data_fim + ", turma="
 				+ turma + ", sala=" + sala + "]";
 	}
-
-	
-
-
 
 }
