@@ -1,7 +1,7 @@
 package br.edu.uniopet.webservice.model.domain;
 
-import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -22,14 +23,30 @@ public class Agenda {
 	private long idAgenda;
 
 	@Column(nullable = false)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", locale = "pt_BR")
-	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "Brazil", locale="pt_BR")
+	@Temporal(javax.persistence.TemporalType.DATE)
+	@Transient
 	private Date data_inicio;
 
 	@Column(nullable = false)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", locale = "pt_BR")
-	@Temporal(javax.persistence.TemporalType.TIMESTAMP)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "Brazil", locale="pt_BR")
+	@Temporal(javax.persistence.TemporalType.DATE)
+	@Transient
 	private Date data_fim;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "Brazil", locale="pt_BR")
+	@Temporal(javax.persistence.TemporalType.DATE)
+	private Date dia_reservada;
+
+	@Column(nullable = false)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "Brazil", locale="pt_BR")
+	@Temporal(javax.persistence.TemporalType.TIME)
+	private Date hora_inicio;
+
+	@Column(nullable = false)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "Brazil", locale="pt_BR")
+	@Temporal(javax.persistence.TemporalType.TIME)
+	private Date hora_fim;
 
 	@ManyToOne
 	@JoinColumn(name = "idTurma")
@@ -38,6 +55,9 @@ public class Agenda {
 	@ManyToOne
 	@JoinColumn(name = "idSala")
 	private Sala sala;
+
+	@Transient
+	private List<DiaDaSemanaCode> diaDaSemana;
 
 	public long getIdAgenda() {
 		return idAgenda;
@@ -63,6 +83,30 @@ public class Agenda {
 		this.data_fim = data_fim;
 	}
 
+	public Date getDia_reservada() {
+		return dia_reservada;
+	}
+
+	public void setDia_reservada(Date dia_reservada) {
+		this.dia_reservada = dia_reservada;
+	}
+
+	public Date getHora_inicio() {
+		return hora_inicio;
+	}
+
+	public void setHora_inicio(Date hora_inicio) {
+		this.hora_inicio = hora_inicio;
+	}
+
+	public Date getHora_fim() {
+		return hora_fim;
+	}
+
+	public void setHora_fim(Date hora_fim) {
+		this.hora_fim = hora_fim;
+	}
+
 	public Turma getTurma() {
 		return turma;
 	}
@@ -79,22 +123,35 @@ public class Agenda {
 		this.sala = sala;
 	}
 
+	public List<DiaDaSemanaCode> getDiaDaSemana() {
+		return diaDaSemana;
+	}
+
+	public void setDiaDaSemana(List<DiaDaSemanaCode> diaDaSemana) {
+		this.diaDaSemana = diaDaSemana;
+	}
+
 	public Agenda() {
 	}
 
-	public Agenda(long idAgenda, Date data_inicio, Date data_fim, Turma turma, Sala sala) {
+	public Agenda(long idAgenda, Date data_inicio, Date data_fim, Date dia_reservada, Date hora_inicio, Date hora_fim,
+			Turma turma, Sala sala, List<DiaDaSemanaCode> diaDaSemana) {
 		super();
 		this.idAgenda = idAgenda;
 		this.data_inicio = data_inicio;
 		this.data_fim = data_fim;
+		this.dia_reservada = dia_reservada;
+		this.hora_inicio = hora_inicio;
+		this.hora_fim = hora_fim;
 		this.turma = turma;
 		this.sala = sala;
+		this.diaDaSemana = diaDaSemana;
 	}
 
 	@Override
 	public String toString() {
-		return "Agenda [idAgenda=" + idAgenda + ", data_inicio=" + data_inicio + ", data_fim=" + data_fim + ", turma="
-				+ turma + ", sala=" + sala + "]";
+		return "Agenda [idAgenda=" + idAgenda + ", data_inicio=" + data_inicio + ", data_fim=" + data_fim
+				+ ", dia_reservada=" + dia_reservada + ", hora_inicio=" + hora_inicio + ", hora_fim=" + hora_fim
+				+ ", turma=" + turma + ", sala=" + sala + ", diaDaSemana=" + diaDaSemana + "]";
 	}
-
 }
