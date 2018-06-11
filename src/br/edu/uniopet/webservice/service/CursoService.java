@@ -2,6 +2,8 @@ package br.edu.uniopet.webservice.service;
 
 import java.util.List;
 
+import javax.ws.rs.core.Response;
+
 import br.edu.uniopet.webservice.model.dao.CursoDAO;
 import br.edu.uniopet.webservice.model.domain.Curso;
 

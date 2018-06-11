@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONException;
@@ -85,7 +86,7 @@ public class CursoDAO {
 
 		///TODO:: mandar json pro front
 		if (cursoIsValid(curso) != null) {
-			
+			throw new DAOException("Existem campos vazios.", ErrorCode.BAD_REQUEST.getCode());
 		}
 
 		try {
@@ -101,11 +102,10 @@ public class CursoDAO {
 		return curso;
 	}
 	
-	public Response buildResponse(Object result){
-        Gson gson = new Gson();
-        String json = gson.toJson(result);
-        return Response.ok(json).build();
-    }
+//	@Produces(value="application/json")
+//	public Response buildResponse(Object result){
+//        return Response.ok(result).build();
+//    }
 	
 	public Curso update(Curso curso) {
 		EntityManager em = JPAUtil.getEntityManager();
