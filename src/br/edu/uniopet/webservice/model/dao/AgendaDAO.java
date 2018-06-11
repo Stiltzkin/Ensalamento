@@ -9,10 +9,12 @@ import br.edu.uniopet.webservice.exceptions.ErrorCode;
 import br.edu.uniopet.webservice.model.domain.Agenda;
 import br.edu.uniopet.webservice.util.AgendamentoUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
-public class AgendaDAO{
+public class AgendaDAO {
 
 	public List<Agenda> getAll() {
 		EntityManager em = JPAUtil.getEntityManager();
@@ -76,7 +78,22 @@ public class AgendaDAO{
 			throw new DAOException("Agenda com dados incompletos.", ErrorCode.BAD_REQUEST.getCode());
 		}
 
-		/// TODO::Nao deixar agendar nos dias ja agendado
+		// Se for data exata (não intervalo entre datas)
+		if (agenda.getData_fim() == null) {
+			Agenda newAgenda = dataExata(agenda);
+			try {
+				em.getTransaction().begin();
+				em.persist(newAgenda);
+				em.getTransaction().commit();
+			} catch (RuntimeException ex) {
+				em.getTransaction().rollback();
+				throw new DAOException("Erro ao salvar agendamento no banco de dados: " + ex.getMessage(),
+						ErrorCode.SERVER_ERROR.getCode());
+			} finally {
+				em.close();
+			}
+			return newAgenda;
+		}
 		AgendamentoUtil agendamentoUtil = new AgendamentoUtil();
 		ArrayList<Date> diasAgendarArray = agendamentoUtil.diasSelecionados(agenda);
 
@@ -87,18 +104,20 @@ public class AgendaDAO{
 			newAgenda.setSala(agenda.getSala());
 			newAgenda.setTurma(agenda.getTurma());
 			newAgenda.setHora_inicio(agenda.getHora_inicio());
-			newAgenda.setHora_fim(agenda.getData_fim());
+			newAgenda.setHora_fim(agenda.getHora_fim());
 			newAgenda.setDia_reservada(diasAgendarArray.get(i));
 			agendamento.add(newAgenda);
 		}
 
+		if (haConflito(agendamento, em) == false) {
+			throw new DAOException("Conflito na agenda.", ErrorCode.BAD_REQUEST.getCode());
+		}
+
 		try {
 			em.getTransaction().begin();
-
 			for (int k = 0; k < agendamento.size(); k++) {
 				em.persist(agendamento.get(k));
 			}
-
 			em.getTransaction().commit();
 		} catch (RuntimeException ex) {
 			em.getTransaction().rollback();
@@ -109,7 +128,7 @@ public class AgendaDAO{
 		}
 		return agenda;
 	}
-	
+
 	public Agenda update(Agenda agenda) {
 		EntityManager em = JPAUtil.getEntityManager();
 		Agenda agendaManaged = null;
@@ -117,8 +136,24 @@ public class AgendaDAO{
 		if (!agendaIsValid(agenda)) {
 			throw new DAOException("Agenda com dados incompletos.", ErrorCode.BAD_REQUEST.getCode());
 		}
-		
-		///TODO::Nao deixar agendar nos dias ja agendado
+
+		// Se for data exata (não intervalo entre datas)
+		if (agenda.getData_fim() == null) {
+			Agenda newAgenda = dataExata(agenda);
+			try {
+				em.getTransaction().begin();
+				em.persist(newAgenda);
+				em.getTransaction().commit();
+			} catch (RuntimeException ex) {
+				em.getTransaction().rollback();
+				throw new DAOException("Erro ao salvar agendamento no banco de dados: " + ex.getMessage(),
+						ErrorCode.SERVER_ERROR.getCode());
+			} finally {
+				em.close();
+			}
+			return newAgenda;
+		}
+
 		AgendamentoUtil agendamentoUtil = new AgendamentoUtil();
 		ArrayList<Date> diasAgendarArray = agendamentoUtil.diasSelecionados(agenda);
 
@@ -133,10 +168,14 @@ public class AgendaDAO{
 			newAgenda.setDia_reservada(diasAgendarArray.get(i));
 			agendamento.add(newAgenda);
 		}
-		
+
+		if (haConflito(agendamento, em)) {
+			throw new DAOException("Conflito na agenda.", ErrorCode.BAD_REQUEST.getCode());
+		}
+
 		try {
 			em.getTransaction().begin();
-			
+
 			for (int k = 0; k < agendamento.size(); k++) {
 				agendaManaged = em.find(Agenda.class, agenda.getIdAgenda());
 				agendaManaged.setDia_reservada(agendamento.get(k).getDia_reservada());
@@ -189,13 +228,54 @@ public class AgendaDAO{
 	}
 
 	private boolean agendaIsValid(Agenda agenda) {
-		if (agenda.getData_inicio() == null) {
-			return false;
-		}
-		if (agenda.getData_fim() == null) {
+		if (agenda.getData_inicio() == null || agenda.getHora_inicio() == null || agenda.getHora_fim() == null
+				|| agenda.getSala() == null || agenda.getTurma() == null) {
 			return false;
 		}
 		return true;
 	}
 
+	private boolean haConflito(ArrayList<Agenda> agendamento, EntityManager em) {
+		List<Agenda> agendasList = null;
+		AgendamentoUtil agendamentoUtil = new AgendamentoUtil();
+		agendasList = em.createQuery("select a from Agenda a", Agenda.class).getResultList();
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		for (int z = 0; z < agendamento.size(); z++) {
+			for (int i = 0; i < agendasList.size(); i++) {
+				String agendamentoStr = sdf.format(agendamento.get(z).getDia_reservada());
+				String agendasListStr = sdf.format(agendasList.get(i).getDia_reservada());
+
+				Calendar agendasListHoraInicio = agendamentoUtil.toCalendar(agendasList.get(i).getHora_inicio());
+				Calendar agendasListHoraFim = agendamentoUtil.toCalendar(agendasList.get(i).getHora_fim());
+				Calendar agendamentoHoraInicio = agendamentoUtil.toCalendar(agendamento.get(z).getHora_fim());
+				Calendar agendamentoHoraFim = agendamentoUtil.toCalendar(agendamento.get(z).getHora_fim());
+
+				if (agendamentoStr.equals(agendasListStr)) {
+					if (agendamentoHoraInicio.before(agendasListHoraFim)
+							&& agendamentoHoraInicio.after(agendasListHoraInicio)) {
+						return false;
+					}
+					if (agendamentoHoraFim.before(agendasListHoraFim)
+							&& agendamentoHoraFim.after(agendasListHoraInicio)) {
+						return false;
+					}
+				}
+
+			}
+		}
+		return true;
+	}
+
+	private Agenda dataExata(Agenda agenda) {
+		Agenda newAgenda = new Agenda();
+		newAgenda.setDia_reservada(agenda.getData_inicio());
+		newAgenda.setHora_inicio(agenda.getHora_inicio());
+		newAgenda.setHora_fim(agenda.getData_fim());
+		newAgenda.setTurma(agenda.getTurma());
+		newAgenda.setSala(agenda.getSala());
+
+		return newAgenda;
+	}
 }

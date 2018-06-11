@@ -3,6 +3,7 @@ package br.edu.uniopet.webservice.util;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import br.edu.uniopet.webservice.model.domain.Agenda;
 import br.edu.uniopet.webservice.model.domain.DiaDaSemanaCode;
 
 public class AgendamentoUtil {
-	public ArrayList<Date> diasSelecionados(Agenda agenda){
+	public ArrayList<Date> diasSelecionados(Agenda agenda) {
 		LocalDate startDateLd = asLocalDate(agenda.getData_inicio());
 		LocalDate endDateLd = asLocalDate(agenda.getData_fim());
 
@@ -30,8 +31,13 @@ public class AgendamentoUtil {
 		}
 		return diasAgendarArray;
 	}
-	
-	
+
+	public Calendar toCalendar(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		return cal;
+	}
+
 	private java.time.LocalDate asLocalDate(Date dateToConvert) {
 		return dateToConvert.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 	}

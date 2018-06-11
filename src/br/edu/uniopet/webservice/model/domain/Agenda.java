@@ -28,7 +28,6 @@ public class Agenda {
 	@Transient
 	private Date data_inicio;
 
-	@Column(nullable = false)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", locale = "pt-BR", timezone = "Brazil/East")
 	@Temporal(javax.persistence.TemporalType.DATE)
 	@Transient

@@ -135,7 +135,7 @@
 			"response": []
 		},
 		{
-			"name": "Agendamento POST",
+			"name": "Agendamento Intervalo POST",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -146,7 +146,38 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"data_inicio\": \"11-02-2018\",\r\n    \"data_fim\": \"22-02-2018\",\r\n    \"hora_inicio\": \"10:22:10\",\r\n    \"hora_fim\": \"15:22:10\",\r\n    \"sala\": {\"idSala\":4 },\r\n    \"turma\": {\"idTurma\": 1},\r\n    \"diaDaSemana\": [1,5]\r\n}"
+					"raw": "{\r\n    \"data_inicio\": \"12-02-2018\",\r\n    \"data_fim\": \"22-02-2018\",\r\n    \"hora_inicio\": \"12:22:10\",\r\n    \"hora_fim\": \"15:22:10\",\r\n    \"sala\": {\"idSala\":4 },\r\n    \"turma\": {\"idTurma\": 1},\r\n    \"diaDaSemana\": [1,5]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9999/Ensalamento2-0.0.1-SNAPSHOT/webapi/agendas/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"Ensalamento2-0.0.1-SNAPSHOT",
+						"webapi",
+						"agendas",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agendamento Exato POST Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"data_inicio\": \"16-02-2018\",\r\n    \"hora_inicio\": \"12:22:10\",\r\n    \"hora_fim\": \"15:22:10\",\r\n    \"sala\": {\"idSala\":4 },\r\n    \"turma\": {\"idTurma\": 1}\r\n}"
 				},
 				"url": {
 					"raw": "http://localhost:9999/Ensalamento2-0.0.1-SNAPSHOT/webapi/agendas/",

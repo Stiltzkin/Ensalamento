@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
+import javax.ws.rs.core.Response;
 
 import org.json.JSONException;
 
@@ -83,10 +84,9 @@ public class CursoDAO {
 		EntityManager em = JPAUtil.getEntityManager();
 
 		///TODO:: mandar json pro front
-//		if (cursoIsValid(curso) != null) {
-//			String jsonError = new Gson().toJson(cursoIsValid(curso));
-//			throw jsonError;
-//		}
+		if (cursoIsValid(curso) != null) {
+			
+		}
 
 		try {
 			em.getTransaction().begin();
@@ -100,7 +100,13 @@ public class CursoDAO {
 		}
 		return curso;
 	}
-
+	
+	public Response buildResponse(Object result){
+        Gson gson = new Gson();
+        String json = gson.toJson(result);
+        return Response.ok(json).build();
+    }
+	
 	public Curso update(Curso curso) {
 		EntityManager em = JPAUtil.getEntityManager();
 		Curso cursoManaged = null;
@@ -174,9 +180,5 @@ public class CursoDAO {
 		// ErrorCode.BAD_REQUEST.getCode());
 		// }
 		return erros;
-	}
-	
-	private String jsonString(String jsonError) throws JSONException{
-		return jsonError;
 	}
 }
