@@ -27,8 +27,8 @@ public class Sala {
 	@Column
 	private int num_cadeiras;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.sala")
-	private Set<Sala_has_Equipamentos> sala_has_Equipamentos = new HashSet<Sala_has_Equipamentos>();
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.sala")
+//	private Set<Sala_has_Equipamentos> sala_has_Equipamentos = new HashSet<Sala_has_Equipamentos>();
 
 	public Long getIdSala() {
 		return idSala;
@@ -62,13 +62,13 @@ public class Sala {
 		this.num_cadeiras = num_cadeiras;
 	}
 
-	public Set<Sala_has_Equipamentos> getSala_has_Equipamentos() {
-		return sala_has_Equipamentos;
-	}
-
-	public void setSala_has_Equipamentos(Set<Sala_has_Equipamentos> sala_has_Equipamentos) {
-		this.sala_has_Equipamentos = sala_has_Equipamentos;
-	}
+//	public Set<Sala_has_Equipamentos> getSala_has_Equipamentos() {
+//		return sala_has_Equipamentos;
+//	}
+//
+//	public void setSala_has_Equipamentos(Set<Sala_has_Equipamentos> sala_has_Equipamentos) {
+//		this.sala_has_Equipamentos = sala_has_Equipamentos;
+//	}
 
 	public Sala(Long idSala, String nm_sala, int tipo_sala, int num_cadeiras,
 			Set<Sala_has_Equipamentos> sala_has_Equipamentos) {
@@ -77,7 +77,7 @@ public class Sala {
 		this.nm_sala = nm_sala;
 		this.tipo_sala = tipo_sala;
 		this.num_cadeiras = num_cadeiras;
-		this.sala_has_Equipamentos = sala_has_Equipamentos;
+//		this.sala_has_Equipamentos = sala_has_Equipamentos;
 	}
 
 	public Sala() {

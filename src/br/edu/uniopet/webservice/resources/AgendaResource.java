@@ -27,10 +27,10 @@ public class AgendaResource {
 	
 	@GET
 	public List<Agenda> getAgendas(@BeanParam PaginationFilterBean paginateFilter){
-		if((paginateFilter.getQtd() >= 0) && (paginateFilter.getPg() >= 0)) {
+		if((paginateFilter.getQtd() >= 0) && (paginateFilter.getPg() > 0)) {
 			return service.getByAgendaPagination(paginateFilter.getPg(), paginateFilter.getQtd());
 		}
-		return service.getAgendas();
+		return service.getAll();
 	}
 	
 	@GET

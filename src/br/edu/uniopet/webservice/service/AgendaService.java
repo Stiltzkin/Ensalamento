@@ -8,7 +8,7 @@ import br.edu.uniopet.webservice.model.domain.Agenda;
 public class AgendaService{
 	private AgendaDAO dao = new AgendaDAO();
 	
-	public List<Agenda> getAgendas(){
+	public List<Agenda> getAll(){
 		return dao.getAll();
 	}
 	

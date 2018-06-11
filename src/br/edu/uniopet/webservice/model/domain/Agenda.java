@@ -23,28 +23,28 @@ public class Agenda {
 	private long idAgenda;
 
 	@Column(nullable = false)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "Brazil", locale="pt_BR")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", locale = "pt-BR", timezone = "Brazil/East")
 	@Temporal(javax.persistence.TemporalType.DATE)
 	@Transient
 	private Date data_inicio;
 
 	@Column(nullable = false)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "Brazil", locale="pt_BR")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", locale = "pt-BR", timezone = "Brazil/East")
 	@Temporal(javax.persistence.TemporalType.DATE)
 	@Transient
 	private Date data_fim;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "Brazil", locale="pt_BR")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", locale = "pt-BR", timezone = "Brazil/East")
 	@Temporal(javax.persistence.TemporalType.DATE)
 	private Date dia_reservada;
 
 	@Column(nullable = false)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "Brazil", locale="pt_BR")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", locale = "pt-BR", timezone = "Brazil/East")
 	@Temporal(javax.persistence.TemporalType.TIME)
 	private Date hora_inicio;
 
 	@Column(nullable = false)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", timezone = "Brazil", locale="pt_BR")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss", locale = "pt-BR", timezone = "Brazil/East")
 	@Temporal(javax.persistence.TemporalType.TIME)
 	private Date hora_fim;
 
