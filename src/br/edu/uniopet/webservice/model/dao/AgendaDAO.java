@@ -241,7 +241,7 @@ public class AgendaDAO {
 		agendasList = em.createQuery("select a from Agenda a", Agenda.class).getResultList();
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
+
 		for (int z = 0; z < agendamento.size(); z++) {
 			for (int i = 0; i < agendasList.size(); i++) {
 				String agendamentoStr = sdf.format(agendamento.get(z).getDia_reservada());
@@ -254,11 +254,14 @@ public class AgendaDAO {
 
 				if (agendamentoStr.equals(agendasListStr)) {
 					if (agendamentoHoraInicio.before(agendasListHoraFim)
-							&& agendamentoHoraInicio.after(agendasListHoraInicio)) {
+							&& agendamentoHoraInicio.after(agendasListHoraInicio)
+							|| agendamentoHoraInicio.compareTo(agendasListHoraInicio) == 0
+							|| agendamentoHoraInicio.compareTo(agendamentoHoraFim) == 0) {
 						return false;
 					}
-					if (agendamentoHoraFim.before(agendasListHoraFim)
-							&& agendamentoHoraFim.after(agendasListHoraInicio)) {
+					if (agendamentoHoraFim.before(agendasListHoraFim) && agendamentoHoraFim.after(agendasListHoraInicio)
+							|| agendamentoHoraFim.compareTo(agendasListHoraInicio) == 0
+							|| agendamentoHoraFim.compareTo(agendasListHoraFim) == 0) {
 						return false;
 					}
 				}

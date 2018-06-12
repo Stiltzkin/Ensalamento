@@ -4,12 +4,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Response;
-
-import org.json.JSONException;
-
-import com.google.gson.Gson;
 
 import br.edu.uniopet.webservice.exceptions.DAOException;
 import br.edu.uniopet.webservice.exceptions.ErrorCode;
@@ -85,7 +79,7 @@ public class CursoDAO {
 		EntityManager em = JPAUtil.getEntityManager();
 
 		///TODO:: mandar json pro front
-		if (cursoIsValid(curso) != null) {
+		if (!cursoIsValid(curso)) {
 			throw new DAOException("Existem campos vazios.", ErrorCode.BAD_REQUEST.getCode());
 		}
 
@@ -164,11 +158,12 @@ public class CursoDAO {
 		return curso;
 	}
 
-	private ArrayList<String> cursoIsValid(Curso curso) {
-		ArrayList<String> erros = new ArrayList<String>();
+	private boolean cursoIsValid(Curso curso) {
+//		ArrayList<String> erros = new ArrayList<String>();
 
 		if (curso.getNome_curso().isEmpty()) {
-			erros.add("Insira o nome do curso.");
+//			erros.add("Insira o nome do curso.");
+			return false;
 		}
 
 		// try {
@@ -179,6 +174,6 @@ public class CursoDAO {
 		// throw new DAOException("Curso com dados incompletos.",
 		// ErrorCode.BAD_REQUEST.getCode());
 		// }
-		return erros;
+		return true;
 	}
 }
